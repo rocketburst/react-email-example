@@ -28,9 +28,19 @@ export default function ContactForm() {
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // TODO: implement
     console.log(values);
+
+    await fetch("/api/send", {
+      method: "POST",
+      body: JSON.stringify({
+        name: values.name,
+        emailAddress: values.email,
+        phoneNumber: values.phone,
+        content: values.content,
+      }),
+    });
   }
 
   return (
